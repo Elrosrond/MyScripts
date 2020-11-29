@@ -1,0 +1,26 @@
+For windows: 
+
+$content = Get-Content -Path 'C:\Zabbix\zabbix_agents\conf\zabbix_agentd.win.conf'
+
+$newcontent = $content -replace 'Server=' , 'Server= x.y.z.t/u ,' -replace 'zabbix_agentd.log' , 'Zabbix\zabbix_agentd.log'
+
+$newcontent | Set-Content -Path 'C:\Zabbix\zabbix_agents\conf\zabbix_agentd.win.conf'
+
+restart-Service 'Zabbix Agent'
+
+New-Item -ItemType "directory" -Path "C:\Zabbix\zabbix_agents\OLDagentlog"
+
+Move-Item -Path C:\zabbix_agentd.log* -Destination C:\Zabbix\zabbix_agents\OLDagentlog
+
+
+-------------------------------------
+for linux:
+
+#!/bin/bash
+
+# Assign the filename
+filename='/etc/zabbix/zabbix_agentd.conf'
+search='Server='
+replace='Server= x.y.z.t/u ,'
+sed -i "s/$search/$replace/" $filename
+service zabbix-agent restart
