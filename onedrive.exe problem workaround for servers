@@ -1,0 +1,48 @@
+$path = "C:\Users\xxx\AppData\Local\Microsoft\OneDrive"
+$onedriveEXEbckup = "C:\Users\xxx\AppData\Local\Microsoft\OneDrive\TMP\yyy.exe"
+$fileexists = Test-Path -Path $onedriveEXEbckup
+
+if ($fileexists)
+
+{
+Break
+}
+
+else
+
+{
+
+Copy-Item $onedriveEXEbckup -Destination $path
+
+Restart-Service -Displayname $service
+
+#delete old update files
+Get-ChildItem $path\*** | sort LastWriteTime | select -SkipLast 2 | Remove-Item -Recurse -Force
+
+}
+
+
+
+$path = C:\Users\srv_dboardusr\AppData\Local\Microsoft\OneDrive
+$onedriveEXEbckup = C:\Users\srv_dboardusr\AppData\Local\Microsoft\OneDrive\tmp\OneDrive.exe
+$fileexists = Test-Path -Path C:\Users\srv_dboardusr\AppData\Local\Microsoft\OneDrive\OneDrive.exe
+
+
+
+if ($fileexists)
+
+{
+
+Break
+
+}
+
+else
+
+{
+
+Copy-Item $onedriveEXEbckup -Destination $path
+Restart-Service -Displayname $service
+Get-ChildItem $path\2*.***.****.**** | sort LastWriteTime | select -SkipLast 2 | Remove-Item -Recurse -Force
+
+}
